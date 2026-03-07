@@ -13,10 +13,13 @@ import { Colors } from "../constants/theme";
 // Ensure these components use 'export const' in their own files
 import { StatusCard } from "../components/StatusCard";
 import { ActivityCard } from "../components/ActivityCard";
+import { useRouter } from "expo-router";
 
 const theme = Colors.light;
 
 export default function JanSevaDashboard() {
+  const router = useRouter(); // Hook must be inside the component
+
   return (
     <SafeAreaView
       style={[styles.container, { backgroundColor: theme.background }]}
@@ -50,9 +53,11 @@ export default function JanSevaDashboard() {
           </Text>
         </View>
 
+        {/* Updated: Navigates to Issues page */}
         <TouchableOpacity
           style={[styles.reportCard, { backgroundColor: theme.brand }]}
           activeOpacity={0.8}
+          onPress={() => router.push("/issues")}
         >
           <View>
             <Text style={styles.reportTitle}>Report New Complaint</Text>
@@ -120,8 +125,11 @@ export default function JanSevaDashboard() {
         />
       </ScrollView>
 
-      {/* FAB: Stays on this page only */}
-      <TouchableOpacity style={[styles.fab, { backgroundColor: theme.brand }]}>
+      {/* Updated: FAB also navigates to Issues page */}
+      <TouchableOpacity
+        style={[styles.fab, { backgroundColor: theme.brand }]}
+        onPress={() => router.push("/issues")}
+      >
         <Plus color="white" size={34} />
       </TouchableOpacity>
     </SafeAreaView>
@@ -142,7 +150,7 @@ const QuickLinkItem = ({ icon, title, sub }: any) => (
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  scrollContent: { padding: 20, paddingBottom: 160 }, // Extra padding for Nav Bar
+  scrollContent: { padding: 20, paddingBottom: 160 },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -177,6 +185,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     elevation: 4,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   reportTitle: { color: "white", fontSize: 24, fontWeight: "bold" },
   reportSubTitle: { color: "white", fontSize: 18, opacity: 0.9 },

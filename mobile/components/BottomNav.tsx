@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Platform,
 } from "react-native";
-import { Home, ClipboardList, Bell, User } from "lucide-react-native";
+import { Home, AlertTriangle, User, Settings } from "lucide-react-native"; // Changed ClipboardList to AlertTriangle
 import { Colors } from "../constants/theme";
 import { useRouter, usePathname } from "expo-router";
 
@@ -39,10 +39,14 @@ export const BottomNav = () => {
   return (
     <View style={styles.bottomNav}>
       <NavItem icon={Home} label="HOME" route="/" />
-      <NavItem icon={ClipboardList} label="MY LIST" route="/my-list" />
+
+      {/* Changed label to ISSUES and route to /issues */}
+      <NavItem icon={AlertTriangle} label="ISSUES" route="/issues" />
+
       <View style={styles.fabSpacer} />
-      <NavItem icon={Bell} label="UPDATES" route="/updates" />
-      <NavItem icon={User} label="PROFILE" route="/profile" />
+
+      <NavItem icon={User} label="PROFILE" route="/history" />
+      <NavItem icon={Settings} label="SETTINGS" route="/settings" />
     </View>
   );
 };
