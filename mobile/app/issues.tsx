@@ -30,14 +30,24 @@ export default function IssuesScreen() {
   const router = useRouter();
 
   const categories = [
-    { id: "roads", title: "ROADS / सड़कें", icon: Landmark },
-    { id: "garbage", title: "GARBAGE / कचरा", icon: Trash2 },
-    { id: "water", title: "WATER / पानी", icon: Droplets },
-    { id: "electricity", title: "ELECTRICITY / बिजली", icon: Zap },
-    { id: "drainage", title: "DRAINAGE / जल निकासी", icon: Waves },
-    { id: "lights", title: "STREETLIGHTS / लाइट", icon: Lightbulb },
-    { id: "health", title: "HEALTH / स्वास्थ्य", icon: Activity },
-    { id: "other", title: "OTHER / अन्य", icon: MoreHorizontal },
+    { id: "roads", title: "address-verification", icon: Landmark },
+    { id: "garbage", title: "commissioner", icon: Trash2 },
+    { id: "water", title: "confirmation", icon: Droplets },
+    { id: "electricity", title: "create-account", icon: Zap },
+    { id: "drainage", title: "details", icon: Waves },
+    { id: "lights", title: "eveidence", icon: Lightbulb },
+    { id: "health", title: "history", icon: Activity },
+    { id: "other", title: "identity-verification", icon: MoreHorizontal },
+    { id: "1", title: "impact", icon: Activity },
+    { id: "2", title: "index", icon: Activity },
+    { id: "3", title: "login", icon: Activity },
+    { id: "4", title: "profile", icon: Activity },
+    { id: "5", title: "regional-performance", icon: Activity },
+    { id: "6", title: "resolution", icon: Activity },
+    { id: "7", title: "staff-dashboard", icon: Activity },
+    { id: "8", title: "success", icon: Activity },
+    { id: "9", title: "ticket_detail", icon: Activity },
+    { id: "10", title: "worker_portal", icon: Activity },
   ];
 
   return (
@@ -69,12 +79,7 @@ export default function IssuesScreen() {
               key={item.id}
               style={styles.categoryCard}
               activeOpacity={0.7}
-              onPress={() =>
-                router.push({
-                  pathname: "/eveidence",
-                  params: { category: item.id },
-                })
-              }
+              onPress={() => router.push(`/${item.title}`as any)}
             >
               <item.icon color={theme.brand} size={42} strokeWidth={1.5} />
               <Text style={styles.cardText}>{item.title}</Text>
