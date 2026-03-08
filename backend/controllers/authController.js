@@ -7,7 +7,7 @@ const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
 };
 
-export const registerUser = async (req, res) => {
+exports.registerUser= async (req, res) => {
   try {
     const { name, email, password, role, ward, phone } = req.body;
     
@@ -27,7 +27,7 @@ export const registerUser = async (req, res) => {
   }
 };
 
-export const loginUser = async (req, res) => {
+exports.loginUser   = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
 

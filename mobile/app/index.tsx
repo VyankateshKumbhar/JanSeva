@@ -5,43 +5,36 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  SafeAreaView,
+  Dimensions,
 } from "react-native";
-import { Megaphone, Info, Phone, Home, Plus } from "lucide-react-native";
+// FIXED: Updated SafeAreaView import
+import { SafeAreaView } from "react-native-safe-area-context"; 
+import { Megaphone, Info, Phone, Plus, Home as HomeIcon, ClipboardList, User, Settings } from "lucide-react-native";
 import { Colors } from "../constants/theme";
-
-// Ensure these components use 'export const' in their own files
+import { Header } from "../components/Header"; 
 import { StatusCard } from "../components/StatusCard";
 import { ActivityCard } from "../components/ActivityCard";
 import { useRouter } from "expo-router";
 
+interface QuickLinkProps {
+  icon: React.ReactNode;
+  title: string;
+  sub: string;
+}
+
 const theme = Colors.light;
+const { width } = Dimensions.get("window");
 
 export default function JanSevaDashboard() {
-  const router = useRouter(); // Hook must be inside the component
+  const router = useRouter();
 
   return (
-    <SafeAreaView
-      style={[styles.container, { backgroundColor: theme.background }]}
-    >
-      <View style={styles.header}>
-        <View style={styles.logoContainer}>
-          <View style={[styles.logoIcon, { backgroundColor: theme.brand }]}>
-            <Home color="white" size={16} />
-          </View>
-          <Text style={[styles.logoText, { color: theme.brand }]}>
-            JAN SEVA
-          </Text>
-        </View>
-        <View style={styles.langSwitch}>
-          <Text style={styles.langTextActive}>HI</Text>
-          <Text style={styles.langDivider}>|</Text>
-          <Text style={styles.langText}>EN</Text>
-        </View>
-      </View>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]} edges={['top', 'left', 'right']}>
+      <Header />
 
-      <ScrollView
-        showsVerticalScrollIndicator={false}
+      <ScrollView 
+        showsVerticalScrollIndicator={false} 
+        style={{ flex: 1 }}
         contentContainerStyle={styles.scrollContent}
       >
         <View style={styles.welcomeSection}>
@@ -53,11 +46,11 @@ export default function JanSevaDashboard() {
           </Text>
         </View>
 
-        {/* Updated: Navigates to Issues page */}
         <TouchableOpacity
           style={[styles.reportCard, { backgroundColor: theme.brand }]}
           activeOpacity={0.8}
-          onPress={() => router.push("/issues")}
+          // FIXED: Path casting
+          onPress={() => router.push("/issues" as any)} 
         >
           <View>
             <Text style={styles.reportTitle}>Report New Complaint</Text>
@@ -125,10 +118,38 @@ export default function JanSevaDashboard() {
         />
       </ScrollView>
 
-      {/* Updated: FAB also navigates to Issues page */}
+      {/* FIXED BOTTOM NAV */}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/" as any)}>
+          <HomeIcon color={theme.brand} size={24} />
+          <Text style={[styles.navLabel, { color: theme.brand }]}>HOME</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/issues" as any)}>
+          <ClipboardList color="#9CA3AF" size={24} />
+          <Text style={styles.navLabel}>ISSUES</Text>
+        </TouchableOpacity>
+
+        <View style={{ width: 60 }} />
+
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/profile" as any)}>
+          <User color="#9CA3AF" size={24} />
+          <Text style={styles.navLabel}>PROFILE</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+  style={styles.navItem} 
+  activeOpacity={1} // Prevents the "fade" effect when clicked
+  onPress={() => { /* Do nothing */ }}
+>
+  <Settings color="#9CA3AF" size={24} />
+  <Text style={styles.navLabel}>SETTINGS</Text>
+</TouchableOpacity>
+      </View>
+
       <TouchableOpacity
         style={[styles.fab, { backgroundColor: theme.brand }]}
-        onPress={() => router.push("/issues")}
+        onPress={() => router.push("/issues" as any)}
       >
         <Plus color="white" size={34} />
       </TouchableOpacity>
@@ -136,7 +157,7 @@ export default function JanSevaDashboard() {
   );
 }
 
-const QuickLinkItem = ({ icon, title, sub }: any) => (
+const QuickLinkItem = ({ icon, title, sub }: QuickLinkProps) => (
   <TouchableOpacity style={styles.linkItem}>
     <View style={styles.linkLeft}>
       <View style={styles.iconCircle}>{icon}</View>
@@ -150,31 +171,7 @@ const QuickLinkItem = ({ icon, title, sub }: any) => (
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  scrollContent: { padding: 20, paddingBottom: 160 },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    backgroundColor: "#FFF",
-    borderBottomWidth: 1,
-    borderBottomColor: "#E5E7EB",
-  },
-  logoContainer: { flexDirection: "row", alignItems: "center" },
-  logoIcon: { padding: 4, borderRadius: 4, marginRight: 8 },
-  logoText: { fontWeight: "900", fontSize: 18, letterSpacing: 0.5 },
-  langSwitch: {
-    flexDirection: "row",
-    borderWidth: 1,
-    borderColor: "#3B82F6",
-    borderRadius: 4,
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    alignItems: "center",
-  },
-  langTextActive: { color: "#3B82F6", fontWeight: "bold", fontSize: 12 },
-  langText: { color: "#9CA3AF", fontSize: 12 },
-  langDivider: { marginHorizontal: 4, color: "#E5E7EB" },
+  scrollContent: { padding: 20, paddingBottom: 100 },
   welcomeSection: { marginVertical: 24 },
   welcomeText: { fontSize: 34, fontWeight: "bold", color: "#1F2937" },
   subText: { color: "#6B7280", fontSize: 16, marginTop: 4 },
@@ -240,17 +237,29 @@ const styles = StyleSheet.create({
   },
   linkTitle: { fontSize: 17, fontWeight: "600", color: "#1F2937" },
   linkSub: { fontSize: 13, color: "#6B7280", marginTop: 2 },
+  bottomNav: {
+    flexDirection: "row",
+    height: 75,
+    backgroundColor: "white",
+    borderTopWidth: 1,
+    borderTopColor: "#E5E7EB",
+    justifyContent: "space-around",
+    alignItems: "center",
+    paddingBottom: 15,
+  },
+  navItem: { alignItems: "center", justifyContent: "center" },
+  navLabel: { fontSize: 10, fontWeight: "bold", marginTop: 4, color: "#9CA3AF" },
   fab: {
     position: "absolute",
-    bottom: 45,
-    alignSelf: "center",
+    bottom: 30,
+    left: (width / 2) - 34,
     width: 68,
     height: 68,
     borderRadius: 34,
     justifyContent: "center",
     alignItems: "center",
     elevation: 10,
-    zIndex: 1100,
+    zIndex: 2000,
     borderWidth: 5,
     borderColor: "white",
   },

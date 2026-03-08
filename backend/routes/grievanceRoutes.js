@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createGrievance, getGrievances } = require('../controllers/grievanceController');
+const { createGrievance, getGrievances } = require('../controllers/grievanceCollector');
 
 router.route('/')
   .post(createGrievance)

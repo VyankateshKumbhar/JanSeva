@@ -1,19 +1,16 @@
 const Grievance = require('../models/Grievance');
 
 // @desc    Create a new grievance
-// @route   POST /api/grievances
-export const createGrievance = async (req, res) => {
+exports.createGrievance = async (req, res) => {
   try {
     const { name, phone, address, category, description, location } = req.body;
 
-    // 1. Simple Urgency Logic (Hackathon style)
     let priority = 'Medium';
     const highUrgencyKeywords = ['danger', 'emergency', 'flood', 'live wire', 'accident'];
     if (highUrgencyKeywords.some(word => description.toLowerCase().includes(word))) {
       priority = 'High';
     }
 
-    // 2. Create the record
     const newGrievance = new Grievance({
       citizen: { name, phone, address, location },
       category,
@@ -35,7 +32,8 @@ export const createGrievance = async (req, res) => {
 };
 
 // @desc    Get all grievances (for Admin Dashboard)
-export const getGrievances = async (req, res) => {
+// FIXED: Changed 'export const' to 'exports.getGrievances'
+exports.getGrievances = async (req, res) => {
   try {
     const grievances = await Grievance.find().sort({ createdAt: -1 });
     res.status(200).json({ success: true, count: grievances.length, data: grievances });
