@@ -95,7 +95,7 @@ export default function AddressVerification() {
         {/* Finish Button */}
         <TouchableOpacity 
           style={[styles.submitButton, { backgroundColor: theme.brand }]}
-          onPress={() => router.push('/profile')} // Takes user to the profile we built earlier
+          onPress={() => router.push('/success')} // Takes user to the profile we built earlier
         >
           <Text style={styles.submitButtonText}>Complete Setup</Text>
           <Text style={styles.submitButtonSubText}>सेटअप पूरा करें</Text>

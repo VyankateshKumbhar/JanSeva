@@ -112,7 +112,7 @@ export default function IdentityVerification() {
         {/* Action Button */}
         <TouchableOpacity 
             style={[styles.verifyButton, { backgroundColor: theme.brand }]}
-            onPress={() => router.push('/success')} // Path to Step 3
+            onPress={() => router.push('/address-verification')} // Path to Step 3
         >
             <Text style={styles.verifyButtonText}>Verify Identity</Text>
             <Text style={styles.verifyButtonSubText}>पहचान सत्यापित करें</Text>
