@@ -9,7 +9,7 @@ import {
   TextInput,
 } from 'react-native';
 import { ChevronLeft, MapPin, Navigation, CheckCircle2 } from 'lucide-react-native';
-import { Colors } from '../constants/theme';
+import { Colors } from '../../constants/theme';
 import { useRouter } from 'expo-router';
 
 export default function AddressVerification() {
@@ -95,7 +95,7 @@ export default function AddressVerification() {
         {/* Finish Button */}
         <TouchableOpacity 
           style={[styles.submitButton, { backgroundColor: theme.brand }]}
-          onPress={() => router.push('/success')} // Takes user to the profile we built earlier
+          onPress={() => router.push('/Auth/success')} // Takes user to the profile we built earlier
         >
           <Text style={styles.submitButtonText}>Complete Setup</Text>
           <Text style={styles.submitButtonSubText}>सेटअप पूरा करें</Text>

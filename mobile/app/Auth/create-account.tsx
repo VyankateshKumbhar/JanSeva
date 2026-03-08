@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { ChevronLeft, User, Phone, Lock, Eye, EyeOff, Check, ArrowRight } from 'lucide-react-native';
-import { Colors } from '../constants/theme'; // Using your project theme
+import { Colors } from '../../constants/theme';
 import { useRouter } from 'expo-router';
 
 export default function CreateAccountScreen() {
@@ -118,7 +118,7 @@ export default function CreateAccountScreen() {
           {/* Next Button */}
           <TouchableOpacity
   style={[styles.nextButton, { backgroundColor: theme.brand }]}
-  onPress={() => router.push("/identity-verification")}
+  onPress={() => router.push("/Auth/identity-verification")}
 >
   <Text style={styles.nextButtonText}>Next / अगला</Text>
   <ArrowRight size={20} color="#fff" />

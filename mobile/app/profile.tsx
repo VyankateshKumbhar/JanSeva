@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Switch, Sa
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { Colors } from '../constants/theme'; // Adjust path if needed
 import { useRouter } from 'expo-router';
+import ScreenHeader from "../components/screen_header";
 export default function ProfileScreen() {
   const [appAlerts, setAppAlerts] = useState(true);
   const [smsAlerts, setSmsAlerts] = useState(false);
@@ -11,13 +12,7 @@ export default function ProfileScreen() {
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity>
-          <Ionicons name="arrow-back" size={24} color="#333" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>प्रोफ़ाइल और सेटिंग्स | Profile</Text>
-        <View style={{ width: 24 }} /> 
-      </View>
+      <ScreenHeader title="PROFILE & SETTINGS" />
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
         {/* Profile Section */}
@@ -110,7 +105,7 @@ export default function ProfileScreen() {
 
           <TouchableOpacity 
   style={styles.menuItem}
-  onPress={() => router.replace('/login')}
+  onPress={() => router.replace('/Auth/login')}
 >
   <View style={[styles.menuIconCircle, { backgroundColor: '#FEE2E2' }]}>
       <Ionicons name="log-out-outline" size={22} color="#EF4444" />

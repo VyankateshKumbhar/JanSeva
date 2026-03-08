@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Animated } from 'react-native';
 import { CheckCircle, ArrowRight, PartyPopper } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
-import { Colors } from '../constants/theme';
+import { Colors } from '../../constants/theme';
 
 export default function SuccessScreen() {
   const router = useRouter();

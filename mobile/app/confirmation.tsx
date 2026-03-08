@@ -25,15 +25,6 @@ export default function ConfirmationScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()}>
-          <ArrowLeft color="#1F2937" size={24} />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Jan Seva</Text>
-        <View style={{ width: 24 }} />
-      </View>
-
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
@@ -77,15 +68,6 @@ export default function ConfirmationScreen() {
             </View>
           </View>
         </View>
-
-        {/* Location Image Summary */}
-        <Image
-          source={{
-            uri: "https://images.unsplash.com/photo-1594818379496-da1e345b0ded",
-          }}
-          style={styles.summaryImage}
-        />
-
         {/* Action Buttons */}
         <TouchableOpacity style={styles.statusButton}>
           <Text style={styles.statusButtonText}>

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, KeyboardAvoidingView, Platform } from 'react-native';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
-import { Colors } from '../constants/theme';
+import { Colors } from '../../constants/theme';
 import { useRouter } from "expo-router";
+
 export default function LoginScreen() {
-  const [userType, setUserType] = useState('citizen'); // 'citizen' or 'staff'
-const router = useRouter();
+  const [userType, setUserType] = useState<'citizen' | 'staff'>('citizen');
+  const router = useRouter();
+
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView 
@@ -13,6 +15,7 @@ const router = useRouter();
         style={styles.flex}
       >
         <View style={styles.card}>
+
           {/* Logo Header */}
           <View style={styles.logoHeader}>
             <FontAwesome5 name="university" size={24} color={Colors.light.brand} />
@@ -22,7 +25,7 @@ const router = useRouter();
           {/* Welcome Section */}
           <View style={styles.centerItems}>
             <View style={styles.iconCircle}>
-               <Ionicons name="location-sharp" size={40} color={Colors.light.brand} />
+              <Ionicons name="location-sharp" size={40} color={Colors.light.brand} />
             </View>
             <Text style={styles.welcomeText}>Welcome | स्वागत है</Text>
             <Text style={styles.subText}>Access government services directly | सरकारी सेवाओं तक सीधे पहुँचें</Text>
@@ -83,16 +86,22 @@ const router = useRouter();
           </View>
 
           <TouchableOpacity 
-  style={styles.outlineBtn}
-  onPress={() => router.push("/create-account")}
->
-  <Text style={styles.outlineBtnText}>Sign Up | पंजीकरण करें</Text>
-</TouchableOpacity>
+            style={styles.outlineBtn}
+            onPress={() => router.push("/Auth/create-account")}
+          >
+            <Text style={styles.outlineBtnText}>Sign Up | पंजीकरण करें</Text>
+          </TouchableOpacity>
+
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
+
+// Tell Expo Router to hide tabs for this screen
+export const unstable_settings = {
+  tabBarVisible: false,
+};
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#F3F4F6', justifyContent: 'center', padding: 20 },

@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { ChevronLeft, Camera, Image as ImageIcon, ShieldCheck } from 'lucide-react-native';
-import { Colors } from '../constants/theme';
+import { Colors } from '../../constants/theme';
 import { useRouter } from 'expo-router';
 
 export default function IdentityVerification() {
@@ -112,7 +112,7 @@ export default function IdentityVerification() {
         {/* Action Button */}
         <TouchableOpacity 
             style={[styles.verifyButton, { backgroundColor: theme.brand }]}
-            onPress={() => router.push('/address-verification')} // Path to Step 3
+            onPress={() => router.push('/Auth/address-verification')} // Path to Step 3
         >
             <Text style={styles.verifyButtonText}>Verify Identity</Text>
             <Text style={styles.verifyButtonSubText}>पहचान सत्यापित करें</Text>
