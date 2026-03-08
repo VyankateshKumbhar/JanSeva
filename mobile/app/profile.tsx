@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Switch, SafeAreaView } from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { Colors } from '../constants/theme'; // Adjust path if needed
-
+import { useRouter } from 'expo-router';
 export default function ProfileScreen() {
   const [appAlerts, setAppAlerts] = useState(true);
   const [smsAlerts, setSmsAlerts] = useState(false);
   const [language, setLanguage] = useState('hi'); // 'hi' for Hindi
-
+  const router = useRouter();
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
@@ -108,12 +108,15 @@ export default function ProfileScreen() {
             <Ionicons name="chevron-forward" size={20} color="#D1D5DB" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.menuItem}>
-            <View style={[styles.menuIconCircle, { backgroundColor: '#FEE2E2' }]}>
-                <Ionicons name="log-out-outline" size={22} color="#EF4444" />
-            </View>
-            <Text style={[styles.menuText, { color: '#EF4444' }]}>लॉग आउट | Logout</Text>
-          </TouchableOpacity>
+          <TouchableOpacity 
+  style={styles.menuItem}
+  onPress={() => router.replace('/login')}
+>
+  <View style={[styles.menuIconCircle, { backgroundColor: '#FEE2E2' }]}>
+      <Ionicons name="log-out-outline" size={22} color="#EF4444" />
+  </View>
+  <Text style={[styles.menuText, { color: '#EF4444' }]}>लॉग आउट | Logout</Text>
+</TouchableOpacity>
         </View>
 
         <Text style={styles.versionText}>JAN SEVA V2.4.0</Text>

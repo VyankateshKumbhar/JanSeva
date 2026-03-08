@@ -15,6 +15,7 @@ import { Header } from "../components/Header";
 import { StatusCard } from "../components/StatusCard";
 import { ActivityCard } from "../components/ActivityCard";
 import { useRouter } from "expo-router";
+import { Stack } from "expo-router";
 
 interface QuickLinkProps {
   icon: React.ReactNode;
@@ -29,6 +30,8 @@ export default function JanSevaDashboard() {
   const router = useRouter();
 
   return (
+    <>
+      <Stack.Screen options={{ headerShown: false }} />
     <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]} edges={['top', 'left', 'right']}>
       <Header />
 
@@ -50,7 +53,7 @@ export default function JanSevaDashboard() {
           style={[styles.reportCard, { backgroundColor: theme.brand }]}
           activeOpacity={0.8}
           // FIXED: Path casting
-          onPress={() => router.push("/issues" as any)} 
+          onPress={() => router.push("/complaint_form" as any)} 
         >
           <View>
             <Text style={styles.reportTitle}>Report New Complaint</Text>
@@ -154,6 +157,7 @@ export default function JanSevaDashboard() {
         <Plus color="white" size={34} />
       </TouchableOpacity>
     </SafeAreaView>
+    </>
   );
 }
 

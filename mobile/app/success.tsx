@@ -53,7 +53,7 @@ export default function SuccessScreen() {
         {/* Final Action Button */}
         <TouchableOpacity 
           style={[styles.button, { backgroundColor: theme.brand }]}
-          onPress={() => router.replace('/profile')} // replace prevents going back to signup steps
+          onPress={() => router.replace('/')} // replace prevents going back to signup steps
         >
           <Text style={styles.buttonText}>Go to Dashboard / डैशबोर्ड पर जाएं</Text>
           <ArrowRight size={20} color="#fff" />

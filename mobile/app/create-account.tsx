@@ -116,10 +116,13 @@ export default function CreateAccountScreen() {
           </TouchableOpacity>
 
           {/* Next Button */}
-          <TouchableOpacity style={[styles.nextButton, { backgroundColor: theme.brand }]}>
-            <Text style={styles.nextButtonText}>Next / अगला</Text>
-            <ArrowRight size={20} color="#fff" />
-          </TouchableOpacity>
+          <TouchableOpacity
+  style={[styles.nextButton, { backgroundColor: theme.brand }]}
+  onPress={() => router.push("/identity-verification")}
+>
+  <Text style={styles.nextButtonText}>Next / अगला</Text>
+  <ArrowRight size={20} color="#fff" />
+</TouchableOpacity>
         </ScrollView>
       </View>
     </SafeAreaView>

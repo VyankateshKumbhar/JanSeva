@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, KeyboardAvoidingView, Platform } from 'react-native';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { Colors } from '../constants/theme';
-
+import { useRouter } from "expo-router";
 export default function LoginScreen() {
   const [userType, setUserType] = useState('citizen'); // 'citizen' or 'staff'
-
+const router = useRouter();
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView 
@@ -82,9 +82,12 @@ export default function LoginScreen() {
             <View style={styles.dividerLine} />
           </View>
 
-          <TouchableOpacity style={styles.outlineBtn}>
-            <Text style={styles.outlineBtnText}>Sign Up | पंजीकरण करें</Text>
-          </TouchableOpacity>
+          <TouchableOpacity 
+  style={styles.outlineBtn}
+  onPress={() => router.push("/create-account")}
+>
+  <Text style={styles.outlineBtnText}>Sign Up | पंजीकरण करें</Text>
+</TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
