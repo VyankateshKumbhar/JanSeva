@@ -32,7 +32,10 @@ export default function JanSevaDashboard() {
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]} edges={['top', 'left', 'right']}>
+    <SafeAreaView
+  style={[styles.container, { backgroundColor: theme.background }]}
+  edges={['left', 'right']}
+>
       <Header />
 
       <ScrollView 
@@ -150,12 +153,6 @@ export default function JanSevaDashboard() {
 </TouchableOpacity>
       </View>
 
-      <TouchableOpacity
-        style={[styles.fab, { backgroundColor: theme.brand }]}
-        onPress={() => router.push("/issues" as any)}
-      >
-        <Plus color="white" size={34} />
-      </TouchableOpacity>
     </SafeAreaView>
     </>
   );

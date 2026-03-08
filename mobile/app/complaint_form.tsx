@@ -11,25 +11,19 @@ import {
 } from "react-native";
 import { ArrowLeft, Camera, MapPin, ChevronDown } from "lucide-react-native";
 import { useRouter } from "expo-router";
-
+import ScreenHeader from "../components/screen_header";
 export default function ReportComplaint() {
   const router = useRouter();
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      {/* HEADER */}
+        <ScreenHeader title="REPORT COMPLAINT" />
+      <ScrollView
+  showsVerticalScrollIndicator={false}
+  contentContainerStyle={{ paddingBottom: 120 }}
+>
         
-        {/* HEADER */}
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => router.back()}>
-            <ArrowLeft size={22} color="#1E293B" />
-          </TouchableOpacity>
-
-          <View>
-            <Text style={styles.title}>Report Complaint /</Text>
-            <Text style={styles.subtitle}>शिकायत दर्ज करें</Text>
-          </View>
-        </View>
 
         {/* ADD PHOTO */}
         <View style={styles.section}>
@@ -89,10 +83,13 @@ export default function ReportComplaint() {
         </View>
 
         {/* SUBMIT BUTTON */}
-        <TouchableOpacity style={styles.submitBtn}>
-          <Text style={styles.submitText}>Submit Complaint</Text>
-          <Text style={styles.submitHindi}>शिकायत दर्ज करें</Text>
-        </TouchableOpacity>
+        <TouchableOpacity
+  style={styles.submitBtn}
+  onPress={() => router.push("/confirmation")}
+>
+  <Text style={styles.submitText}>Submit Complaint</Text>
+  <Text style={styles.submitHindi}>शिकायत दर्ज करें</Text>
+</TouchableOpacity>
 
       </ScrollView>
     </SafeAreaView>
@@ -105,12 +102,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F8F6F3",
   },
 
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 18,
-    gap: 12,
-  },
+
 
   title: {
     fontSize: 16,

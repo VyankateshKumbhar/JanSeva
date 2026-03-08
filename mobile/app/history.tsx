@@ -12,6 +12,7 @@ import {
 import { ArrowLeft, Bell, Search, MapPin, Clock } from "lucide-react-native";
 import { useRouter } from "expo-router";
 import { Colors } from "../constants/theme";
+import ScreenHeader from "../components/screen_header";
 
 const theme = Colors.light;
 
@@ -56,19 +57,7 @@ export default function MyGrievancesScreen() {
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => router.back()}
-          style={styles.headerBtn}
-        >
-          <ArrowLeft color={theme.brand} size={24} />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>MY GRIEVANCES</Text>
-        <TouchableOpacity style={styles.headerBtn}>
-          <Bell color="#334155" size={24} />
-          <View style={styles.notifBadge} />
-        </TouchableOpacity>
-      </View>
+      <ScreenHeader title="MY GRIEVANCES" />
 
       <ScrollView
         contentContainerStyle={styles.scrollContent}
