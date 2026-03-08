@@ -1,4 +1,4 @@
-const Grievance = require('../models/Grievance');
+const Grievance = require('../models/Grievance.js');
 const { analyzeComplaint } = require("../utils/geminiAnalyzer.js");
 // @desc    Create a new grievance
 exports.createGrievance = async (req, res) => {
@@ -42,26 +42,17 @@ exports.getGrievances = async (req, res) => {
   }
 };
 
-export const analyzeComplaintController = async (req, res) => {
+// Option 1: Attach function to exports
+exports.analyzeComplaintController = async (req, res) => {
   try {
-
     console.log("HEADERS:", req.headers);
     console.log("BODY:", req.body);
 
     const { description, imageUrl } = req.body;
-
     const aiResult = await analyzeComplaint(imageUrl, description);
 
-    res.json({
-      success: true,
-      analysis: aiResult
-    });
-
+    res.json({ success: true, analysis: aiResult });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "AI analysis failed",
-      error: error.message
-    });
+    res.status(500).json({ success: false, message: "AI analysis failed", error: error.message });
   }
 };

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { createGrievance, getGrievances } = require('../controllers/grievanceCollector');
-const { createGrievance, getGrievances,analyzeComplaintController } = require('../controllers/grivienceCollector');
+
+const { createGrievance, getGrievances,analyzeComplaintController } = require('../controllers/grievanceCollector.js');
 
 
 router.route('/')
