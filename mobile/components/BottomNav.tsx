@@ -9,7 +9,7 @@ import {
 import { Home, AlertTriangle, User, Settings } from "lucide-react-native"; // Changed ClipboardList to AlertTriangle
 import { Colors } from "../constants/theme";
 import { useRouter, usePathname } from "expo-router";
-
+import { ClipboardList } from "lucide-react-native";
 const theme = Colors.light;
 
 export const BottomNav = () => {
@@ -45,8 +45,8 @@ export const BottomNav = () => {
 
       <View style={styles.fabSpacer} />
 
-      <NavItem icon={User} label="PROFILE" route="/history" />
-      <NavItem icon={Settings} label="SETTINGS" route="/settings" />
+      <NavItem icon={ClipboardList} label="My grievances" route="/history" />
+      <NavItem icon={User} label="Profile" route="/profile" />
     </View>
   );
 };
