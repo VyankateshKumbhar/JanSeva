@@ -1,138 +1,192 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, KeyboardAvoidingView, Platform } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, KeyboardAvoidingView, Platform, ScrollView, Animated } from 'react-native';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { Colors } from '../../constants/theme';
 import { useRouter } from "expo-router";
 
 export default function LoginScreen() {
   const [userType, setUserType] = useState<'citizen' | 'staff'>('citizen');
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
+  // Color logic for "The Feel"
+  const activeColor = userType === 'citizen' ? Colors.light.brand : '#1E40AF'; // Blue for Staff, Orange/Brand for Citizen
+  const lightBg = userType === 'citizen' ? '#FFF7ED' : '#EFF6FF';
+  const iconName = userType === 'citizen' ? "location-sharp" : "shield-checkmark";
+
   return (
-    <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView 
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
-        style={styles.flex}
-      >
-        <View style={styles.card}>
-
-          {/* Logo Header */}
-          <View style={styles.logoHeader}>
-            <FontAwesome5 name="university" size={24} color={Colors.light.brand} />
-            <Text style={styles.brandTitle}>Jan Seva | जन सेवा</Text>
-          </View>
-
-          {/* Welcome Section */}
-          <View style={styles.centerItems}>
-            <View style={styles.iconCircle}>
-              <Ionicons name="location-sharp" size={40} color={Colors.light.brand} />
+    <SafeAreaView style={[styles.container, { backgroundColor: userType === 'citizen' ? '#F8FAFC' : '#F1F5F9' }]}>
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.flex}>
+        <ScrollView contentContainerStyle={styles.scrollGrow} showsVerticalScrollIndicator={false}>
+          
+          <View style={styles.card}>
+            {/* Logo Header */}
+            <View style={styles.logoHeader}>
+              <FontAwesome5 name="university" size={18} color={activeColor} />
+              <Text style={[styles.brandTitle, { color: activeColor }]}>Jan Seva | जन सेवा</Text>
             </View>
-            <Text style={styles.welcomeText}>Welcome | स्वागत है</Text>
-            <Text style={styles.subText}>Access government services directly | सरकारी सेवाओं तक सीधे पहुँचें</Text>
-          </View>
 
-          {/* Toggle Login Type */}
-          <Text style={styles.labelSmall}>LOGIN AS | इस रूप में लॉगिन करें</Text>
-          <View style={styles.toggleContainer}>
-            <TouchableOpacity 
-              style={[styles.toggleBtn, userType === 'citizen' && styles.toggleBtnActive]}
-              onPress={() => setUserType('citizen')}
-            >
-              <Text style={[styles.toggleText, userType === 'citizen' && styles.toggleTextActive]}>Citizen | नागरिक</Text>
-            </TouchableOpacity>
-            <TouchableOpacity 
-              style={[styles.toggleBtn, userType === 'staff' && styles.toggleBtnActive]}
-              onPress={() => setUserType('staff')}
-            >
-              <Text style={[styles.toggleText, userType === 'staff' && styles.toggleTextActive]}>Staff | कर्मचारी</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* Input Fields */}
-          <View style={styles.inputGroup}>
-            <Text style={styles.inputLabel}>Mobile Number | मोबाइल नंबर</Text>
-            <View style={styles.inputWrapper}>
-              <Text style={styles.prefix}>+91</Text>
-              <TextInput 
-                placeholder="00000-00000" 
-                keyboardType="phone-pad"
-                style={styles.input}
-                placeholderTextColor="#9CA3AF"
-              />
+            {/* Welcome Section - DYNAMIC CONTENT */}
+            <View style={styles.centerItems}>
+              <View style={[styles.iconCircle, { backgroundColor: lightBg, borderColor: userType === 'citizen' ? '#FFEDD5' : '#DBEAFE' }]}>
+                <Ionicons name={iconName} size={38} color={activeColor} />
+              </View>
+              <Text style={styles.welcomeText}>
+                {userType === 'citizen' ? 'Citizen Login' : 'Staff Portal'}
+              </Text>
+              <Text style={styles.subText}>
+                {userType === 'citizen' 
+                  ? "Access government services directly\nसरकारी सेवाओं तक सीधे पहुँचें"
+                  : "Internal Management & Resolution\nआंतरिक प्रबंधन और शिकायत निवारण"}
+              </Text>
             </View>
+
+            {/* Enhanced Toggle */}
+            <View style={styles.toggleSection}>
+              <View style={styles.toggleContainer}>
+                <TouchableOpacity 
+                  activeOpacity={0.8}
+                  style={[styles.toggleBtn, userType === 'citizen' && { backgroundColor: Colors.light.brand }]}
+                  onPress={() => setUserType('citizen')}
+                >
+                  <Text style={[styles.toggleText, userType === 'citizen' && styles.toggleTextActive]}>Citizen | नागरिक</Text>
+                </TouchableOpacity>
+                
+                <TouchableOpacity 
+                  activeOpacity={0.8}
+                  style={[styles.toggleBtn, userType === 'staff' && { backgroundColor: '#1E40AF' }]}
+                  onPress={() => setUserType('staff')}
+                >
+                  <Text style={[styles.toggleText, userType === 'staff' && styles.toggleTextActive]}>Staff | कर्मचारी</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            {/* Input Fields */}
+            <View style={styles.form}>
+              <View style={styles.inputGroup}>
+                <Text style={styles.inputLabel}>Mobile Number | मोबाइल नंबर</Text>
+                <View style={[styles.inputWrapper, { borderColor: userType === 'staff' ? '#BFDBFE' : '#E2E8F0' }]}>
+                  <Ionicons name="call-outline" size={20} color={activeColor} style={styles.leftIcon} />
+                  <Text style={styles.prefix}>+91</Text>
+                  <TextInput 
+                    placeholder="00000-00000" 
+                    keyboardType="phone-pad"
+                    style={styles.input}
+                  />
+                </View>
+              </View>
+
+              <View style={styles.inputGroup}>
+                <Text style={styles.inputLabel}>Password | पासवर्ड</Text>
+                <View style={[styles.inputWrapper, { borderColor: userType === 'staff' ? '#BFDBFE' : '#E2E8F0' }]}>
+                  <Ionicons name="lock-closed-outline" size={20} color={activeColor} style={styles.leftIcon} />
+                  <TextInput 
+                    placeholder="Enter password" 
+                    secureTextEntry={!showPassword}
+                    style={styles.input}
+                  />
+                  <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                    <Ionicons name={showPassword ? "eye-outline" : "eye-off-outline"} size={20} color="#94A3B8" />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+
+            {/* Submit Button - DYNAMIC COLOR */}
+            <TouchableOpacity
+              style={[styles.primaryBtn, { backgroundColor: activeColor }]}
+              onPress={() => 
+  router.push((userType === 'citizen' ? "/department_dashboard" : "/staff-dashboard") as any)
+}
+            >
+              <Text style={styles.primaryBtnText}>
+                {userType === 'citizen' ? 'Login | लॉगिन करें' : 'Admin Access'}
+              </Text>
+              <Ionicons name="arrow-forward" size={20} color="#fff" />
+            </TouchableOpacity>
+
+            {userType === 'citizen' && (
+              <>
+                <View style={styles.dividerContainer}>
+                  <View style={styles.dividerLine} />
+                  <Text style={styles.dividerText}>NEW USER?</Text>
+                  <View style={styles.dividerLine} />
+                </View>
+                <TouchableOpacity 
+                  style={[styles.outlineBtn, { borderColor: activeColor }]}
+                  onPress={() => router.push("/Auth/create-account")}
+                >
+                  <Text style={[styles.outlineBtnText, { color: activeColor }]}>Sign Up | पंजीकरण करें</Text>
+                </TouchableOpacity>
+              </>
+            )}
           </View>
-
-          <View style={styles.inputGroup}>
-            <Text style={styles.inputLabel}>Password | पासवर्ड</Text>
-            <TextInput 
-              placeholder="Enter your password | पासवर्ड दर्ज करें" 
-              secureTextEntry
-              style={[styles.input, styles.singleInput]}
-              placeholderTextColor="#9CA3AF"
-            />
-          </View>
-
-          {/* Submit Button */}
-          <TouchableOpacity
-  style={styles.primaryBtn}
-  onPress={() => router.push("/Department/departmet_dashboard")}
->
-  <Text style={styles.primaryBtnText}>Send OTP | ओटीपी भेजें</Text>
-  <Ionicons name="arrow-forward" size={20} color="#fff" />
-</TouchableOpacity>
-
-          {/* Footer */}
-          <View style={styles.dividerContainer}>
-            <View style={styles.dividerLine} />
-            <Text style={styles.dividerText}>NEW USER? | नए उपयोगकर्ता?</Text>
-            <View style={styles.dividerLine} />
-          </View>
-
-          <TouchableOpacity 
-            style={styles.outlineBtn}
-            onPress={() => router.push("/Auth/create-account")}
-          >
-            <Text style={styles.outlineBtnText}>Sign Up | पंजीकरण करें</Text>
-          </TouchableOpacity>
-
-        </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
 
-// Tell Expo Router to hide tabs for this screen
-export const unstable_settings = {
-  tabBarVisible: false,
-};
-
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F3F4F6', justifyContent: 'center', padding: 20 },
-  flex: { flex: 1, justifyContent: 'center' },
-  card: { backgroundColor: '#fff', borderRadius: 20, padding: 24, elevation: 5, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, shadowRadius: 8 },
-  logoHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 30 },
-  brandTitle: { fontSize: 18, fontWeight: 'bold', marginLeft: 10, color: '#1F2937' },
-  centerItems: { alignItems: 'center', marginBottom: 30 },
-  iconCircle: { width: 80, height: 80, borderRadius: 40, backgroundColor: '#FFF7ED', justifyContent: 'center', alignItems: 'center', marginBottom: 15 },
-  welcomeText: { fontSize: 22, fontWeight: 'bold', color: '#111827' },
-  subText: { fontSize: 13, color: '#6B7280', textAlign: 'center', marginTop: 5, paddingHorizontal: 10 },
-  labelSmall: { fontSize: 11, fontWeight: '700', color: '#374151', textAlign: 'center', marginBottom: 10 },
-  toggleContainer: { flexDirection: 'row', backgroundColor: '#F3F4F6', borderRadius: 12, padding: 4, marginBottom: 25 },
-  toggleBtn: { flex: 1, paddingVertical: 10, alignItems: 'center', borderRadius: 10 },
-  toggleBtnActive: { backgroundColor: Colors.light.brand },
-  toggleText: { fontSize: 14, fontWeight: '600', color: '#6B7280' },
+  container: { flex: 1 },
+  flex: { flex: 1 },
+  scrollGrow: { flexGrow: 1, justifyContent: 'center', padding: 20 },
+  card: { 
+    backgroundColor: '#fff', 
+    borderRadius: 28, 
+    padding: 24, 
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 15,
+  },
+  logoHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 20 },
+  brandTitle: { fontSize: 14, fontWeight: '700', marginLeft: 8, letterSpacing: 1 },
+  centerItems: { alignItems: 'center', marginBottom: 20 },
+  iconCircle: { 
+    width: 75, 
+    height: 75, 
+    borderRadius: 37.5, 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    marginBottom: 12,
+    borderWidth: 1.5,
+  },
+  welcomeText: { fontSize: 24, fontWeight: '900', color: '#1E293B' },
+  subText: { fontSize: 13, color: '#64748B', textAlign: 'center', marginTop: 4, lineHeight: 18 },
+  toggleSection: { marginBottom: 25 },
+  toggleContainer: { flexDirection: 'row', backgroundColor: '#F1F5F9', borderRadius: 16, padding: 6 },
+  toggleBtn: { flex: 1, paddingVertical: 12, alignItems: 'center', borderRadius: 12 },
+  toggleText: { fontSize: 13, fontWeight: '700', color: '#94A3B8' },
   toggleTextActive: { color: '#fff' },
-  inputGroup: { marginBottom: 15 },
-  inputLabel: { fontSize: 14, fontWeight: '600', color: '#374151', marginBottom: 8 },
-  inputWrapper: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: '#E5E7EB', borderRadius: 12, paddingHorizontal: 15 },
-  prefix: { fontSize: 16, color: '#374151', marginRight: 10, fontWeight: '500' },
-  input: { flex: 1, height: 50, fontSize: 16, color: '#111827' },
-  singleInput: { borderWidth: 1, borderColor: '#E5E7EB', borderRadius: 12, paddingHorizontal: 15 },
-  primaryBtn: { backgroundColor: Colors.light.brand, borderRadius: 12, height: 55, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 10 },
-  primaryBtnText: { color: '#fff', fontSize: 18, fontWeight: 'bold', marginRight: 10 },
-  dividerContainer: { flexDirection: 'row', alignItems: 'center', marginVertical: 25 },
-  dividerLine: { flex: 1, height: 1, backgroundColor: '#E5E7EB' },
-  dividerText: { marginHorizontal: 10, fontSize: 10, color: '#9CA3AF', fontWeight: 'bold' },
-  outlineBtn: { borderWidth: 1, borderColor: Colors.light.brand, borderRadius: 12, height: 55, alignItems: 'center', justifyContent: 'center' },
-  outlineBtnText: { color: Colors.light.brand, fontSize: 18, fontWeight: 'bold' },
+  form: { marginBottom: 10 },
+  inputGroup: { marginBottom: 16 },
+  inputLabel: { fontSize: 13, fontWeight: '700', color: '#475569', marginBottom: 6, marginLeft: 4 },
+  inputWrapper: { 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    borderWidth: 1.5, 
+    borderRadius: 14, 
+    paddingHorizontal: 16,
+    height: 56,
+    backgroundColor: '#F8FAFC'
+  },
+  leftIcon: { marginRight: 10 },
+  prefix: { fontSize: 16, color: '#1E293B', marginRight: 10, fontWeight: '700' },
+  input: { flex: 1, fontSize: 15, color: '#1E293B' },
+  primaryBtn: { 
+    borderRadius: 16, 
+    height: 60, 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    marginTop: 10,
+  },
+  primaryBtnText: { color: '#fff', fontSize: 16, fontWeight: '800', marginRight: 8 },
+  dividerContainer: { flexDirection: 'row', alignItems: 'center', marginVertical: 20 },
+  dividerLine: { flex: 1, height: 1, backgroundColor: '#E2E8F0' },
+  dividerText: { marginHorizontal: 12, fontSize: 10, color: '#94A3B8', fontWeight: '800' },
+  outlineBtn: { borderWidth: 2, borderRadius: 16, height: 56, alignItems: 'center', justifyContent: 'center' },
+  outlineBtnText: { fontSize: 15, fontWeight: '700' },
 });
