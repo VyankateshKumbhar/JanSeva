@@ -85,8 +85,8 @@ const StatCard = ({ title, value, icon, color }: any) => (
   </View>
 );
 
-const ActionButton = ({ icon, label }: any) => (
-  <TouchableOpacity style={styles.actionBtn}>
+const ActionButton = ({ icon, label, onPress }: any) => (
+  <TouchableOpacity style={styles.actionBtn} onPress={onPress}>
     <MaterialIcons name={icon} size={22} color="#d95d3a" />
     <Text style={styles.actionText}>{label}</Text>
   </TouchableOpacity>

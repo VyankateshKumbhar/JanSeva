@@ -9,22 +9,16 @@ import {
   Image,
 } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-
+import ScreenHeader from "../../components/screen_header";
+import { useRouter } from "expo-router";
 export default function ComplaintDetails() {
+  const router = useRouter();
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
 
         {/* HEADER */}
-        <View style={styles.header}>
-          <Ionicons name="arrow-back" size={24} color="#333" />
-
-          <Text style={styles.headerTitle}>
-            Complaint Details / शिकायत विवरण
-          </Text>
-
-          <Ionicons name="language" size={22} color="#e05a2a" />
-        </View>
+        <ScreenHeader title="COMPLAINT DETAILS" />
 
         {/* LANGUAGE TABS */}
         <View style={styles.langTabs}>
@@ -106,7 +100,7 @@ export default function ComplaintDetails() {
         </View>
 
         {/* ASSIGN BUTTON */}
-        <TouchableOpacity style={styles.assignBtn}>
+        <TouchableOpacity style={styles.assignBtn} onPress={() => router.push("/Department/assign_worker")}>
           <Ionicons name="person-add" size={20} color="#fff" />
           <Text style={styles.assignText}>
             Assign Worker / कर्मचारी नियुक्त करें

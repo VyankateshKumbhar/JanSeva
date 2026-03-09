@@ -7,20 +7,20 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+import ScreenHeader from "../../components/screen_header";
+import { useRouter } from "expo-router";
 
 export default function ComplaintsScreen() {
   const [activeTab, setActiveTab] = useState("Pending");
+  const router = useRouter();
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* HEADER */}
+      <ScreenHeader title="COMPLAINTS" />
+
       {/* STATUS TABS */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.tabs}
-      >
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tabs}>
         {["Pending", "Assigned", "In Progress", "Completed"].map((tab) => (
           <TouchableOpacity
             key={tab}
@@ -50,7 +50,6 @@ export default function ComplaintsScreen() {
 
       {/* LIST */}
       <ScrollView style={{ paddingHorizontal: 16 }}>
-
         <ComplaintCard
           id="C101"
           title="Garbage / कचरा"
@@ -58,6 +57,7 @@ export default function ComplaintsScreen() {
           time="Reported: 2h ago"
           status="PENDING"
           statusColor="#F59E0B"
+          onPress={() => router.push("/Department/complaint_details")}
         />
 
         <ComplaintCard
@@ -67,6 +67,7 @@ export default function ComplaintsScreen() {
           time="Engineer: Rajesh Kumar"
           status="ASSIGNED"
           statusColor="#3B82F6"
+          onPress={() => router.push("/Department/complaint_details")}
         />
 
         <ComplaintCard
@@ -76,6 +77,7 @@ export default function ComplaintsScreen() {
           time="Repair ongoing"
           status="IN PROGRESS"
           statusColor="#6366F1"
+          onPress={() => router.push("/Department/complaint_details")}
         />
 
         <ComplaintCard
@@ -85,8 +87,8 @@ export default function ComplaintsScreen() {
           time="Reason: Incorrect location provided"
           status="REJECTED"
           statusColor="#EF4444"
+          onPress={() => router.push("/Department/complaint_details")}
         />
-
       </ScrollView>
 
       {/* FLOAT BUTTON */}
@@ -121,6 +123,7 @@ const ComplaintCard = ({
   time,
   status,
   statusColor,
+  onPress,
 }: any) => (
   <View style={styles.card}>
     <View style={styles.cardTop}>
@@ -149,7 +152,7 @@ const ComplaintCard = ({
 
     <View style={styles.divider} />
 
-    <TouchableOpacity style={styles.details}>
+    <TouchableOpacity style={styles.details} onPress={onPress}>
       <Text style={styles.detailsText}>View Details</Text>
       <Ionicons name="chevron-forward" size={16} color="#e05a2a" />
     </TouchableOpacity>
@@ -158,11 +161,7 @@ const ComplaintCard = ({
 
 const NavItem = ({ icon, label, active }: any) => (
   <TouchableOpacity style={styles.navItem}>
-    <Ionicons
-      name={icon}
-      size={22}
-      color={active ? "#e05a2a" : "#94A3B8"}
-    />
+    <Ionicons name={icon} size={22} color={active ? "#e05a2a" : "#94A3B8"} />
     <Text style={[styles.navText, active && { color: "#e05a2a" }]}>
       {label}
     </Text>
@@ -177,25 +176,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#F8F6F6",
   },
 
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 16,
-    alignItems: "center",
-  },
-
-  title: {
-    fontSize: 20,
-    fontWeight: "700",
-  },
-
-  subtitle: {
-    fontSize: 12,
-    color: "#e05a2a",
-  },
-
   tabs: {
     paddingHorizontal: 10,
+    paddingTop: 10,
   },
 
   tabItem: {
