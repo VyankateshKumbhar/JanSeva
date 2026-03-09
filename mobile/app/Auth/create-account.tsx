@@ -8,7 +8,7 @@ import {
   SafeAreaView,
   ScrollView,
 } from 'react-native';
-import { ChevronLeft, User, Phone, Lock, Eye, EyeOff, Check, ArrowRight } from 'lucide-react-native';
+import { ChevronLeft, User, Phone, Lock, Eye, EyeOff, Check, ArrowRight, MapPin } from 'lucide-react-native';
 import { Colors } from '../../constants/theme';
 import { useRouter } from 'expo-router';
 
@@ -17,8 +17,14 @@ export default function CreateAccountScreen() {
   const [showPassword, setShowPassword] = useState(false);
   const [agree, setAgree] = useState(false);
   
-  // Accessing your theme directly
   const theme = Colors.light; 
+
+  // Function to handle the final sign up
+  const handleSignUp = () => {
+    // Add your backend logic here later
+    // For now, redirect to the login or dashboard
+    router.replace("/Auth/login");``
+  };
 
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.background }]}>
@@ -32,65 +38,48 @@ export default function CreateAccountScreen() {
         </View>
 
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
-          {/* Progress Bar Area */}
-          <View style={styles.progressContainer}>
-            <Text style={[styles.stepText, { color: theme.textSecondary }]}>Step 1: Account Setup / चरण 1</Text>
-            <Text style={[styles.stepCount, { color: theme.textSecondary }]}>1/3</Text>
-          </View>
-          <View style={[styles.progressBarBg, { backgroundColor: theme.cardBorder }]}>
-            <View style={[styles.progressBarFill, { backgroundColor: theme.brand }]} />
-          </View>
-
           {/* Titles */}
-          <Text style={[styles.mainTitle, { color: theme.text }]}>Create Account</Text>
-          <Text style={[styles.mainTitleHindi, { color: theme.text }]}>खाता बनाएँ</Text>
-          
-          <Text style={[styles.subTitle, { color: theme.textSecondary }]}>Join us to access civic services easily.</Text>
-          <Text style={[styles.subTitleHindi, { color: theme.textSecondary }]}>नागरिक सेवाओं के लिए हमसे जुड़ें।</Text>
+          <View style={styles.titleSection}>
+            <Text style={[styles.mainTitle, { color: theme.text }]}>Create Account</Text>
+            <Text style={[styles.mainTitleHindi, { color: theme.text }]}>खाता बनाएँ</Text>
+            <Text style={[styles.subTitle, { color: theme.textSecondary }]}>Join us to access civic services easily.</Text>
+          </View>
 
           {/* Form Fields */}
           <View style={styles.formContainer}>
-            {/* Full Name */}
             <View style={styles.inputGroup}>
               <Text style={[styles.inputLabel, { color: theme.textSecondary }]}>Full Name / पूरा नाम</Text>
               <View style={[styles.inputWrapper, { borderColor: theme.cardBorder }]}>
                 <User size={20} color={theme.brand} style={styles.inputIcon} />
-                <TextInput 
-                  placeholder="e.g. Rahul Sharma"
-                  style={[styles.input, { color: theme.text }]}
-                  placeholderTextColor={theme.tabIconDefault}
-                />
+                <TextInput placeholder="e.g. Rahul Sharma" style={[styles.input, { color: theme.text }]} placeholderTextColor={theme.tabIconDefault} />
               </View>
             </View>
 
-            {/* Mobile Number */}
             <View style={styles.inputGroup}>
               <Text style={[styles.inputLabel, { color: theme.textSecondary }]}>Mobile Number / मोबाइल नंबर</Text>
               <View style={[styles.inputWrapper, { borderColor: theme.cardBorder }]}>
                 <Phone size={20} color={theme.brand} style={styles.inputIcon} />
-                <View style={styles.countryCodeContainer}>
-                    <Text style={[styles.countryCode, { color: theme.text }]}>+91</Text>
-                    <View style={[styles.vDivider, { backgroundColor: theme.cardBorder }]} />
-                </View>
-                <TextInput 
-                  placeholder="9876543210"
-                  style={[styles.input, { color: theme.text }]}
-                  keyboardType="phone-pad"
-                  placeholderTextColor={theme.tabIconDefault}
-                />
+                <TextInput placeholder="9876543210" style={[styles.input, { color: theme.text }]} keyboardType="phone-pad" placeholderTextColor={theme.tabIconDefault} />
               </View>
             </View>
 
-            {/* Password */}
+            <View style={styles.inputGroup}>
+              <Text style={[styles.inputLabel, { color: theme.textSecondary }]}>Residential Address / आवासीय पता</Text>
+              <View style={[styles.inputWrapper, { borderColor: theme.cardBorder }]}>
+                <MapPin size={20} color={theme.brand} style={styles.inputIcon} />
+                <TextInput placeholder="Enter your full address" style={[styles.input, { color: theme.text }]} placeholderTextColor={theme.tabIconDefault} />
+              </View>
+            </View>
+
             <View style={styles.inputGroup}>
               <Text style={[styles.inputLabel, { color: theme.textSecondary }]}>Create Password / पासवर्ड बनाएँ</Text>
               <View style={[styles.inputWrapper, { borderColor: theme.cardBorder }]}>
                 <Lock size={20} color={theme.brand} style={styles.inputIcon} />
                 <TextInput 
-                  placeholder="At least 8 characters"
-                  style={[styles.input, { color: theme.text }]}
-                  secureTextEntry={!showPassword}
-                  placeholderTextColor={theme.tabIconDefault}
+                  placeholder="At least 8 characters" 
+                  style={[styles.input, { color: theme.text }]} 
+                  secureTextEntry={!showPassword} 
+                  placeholderTextColor={theme.tabIconDefault} 
                 />
                 <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
                   <EyeOff size={20} color={theme.tabIconDefault} />
@@ -99,30 +88,22 @@ export default function CreateAccountScreen() {
             </View>
           </View>
 
-          {/* Terms Checkbox */}
+          {/* Terms */}
           <TouchableOpacity style={styles.termsContainer} onPress={() => setAgree(!agree)}>
-            <View style={[
-                styles.checkbox, 
-                { borderColor: theme.cardBorder },
-                agree && { backgroundColor: theme.brand, borderColor: theme.brand }
-            ]}>
+            <View style={[styles.checkbox, { borderColor: theme.cardBorder }, agree && { backgroundColor: theme.brand, borderColor: theme.brand }]}>
               {agree && <Check size={12} color="#fff" strokeWidth={3} />}
             </View>
-            <View style={styles.termsTextWrapper}>
-                <Text style={[styles.termsText, { color: theme.textSecondary }]}>
-                    By proceeding, I agree to the <Text style={{ color: theme.brand, fontWeight: '700' }}>Terms of Service</Text>
-                </Text>
-            </View>
+            <Text style={[styles.termsText, { color: theme.textSecondary }]}>I agree to the Terms of Service</Text>
           </TouchableOpacity>
 
-          {/* Next Button */}
+          {/* SIGN UP BUTTON */}
           <TouchableOpacity
-  style={[styles.nextButton, { backgroundColor: theme.brand }]}
-  onPress={() => router.push("/Auth/identity-verification")}
->
-  <Text style={styles.nextButtonText}>Next / अगला</Text>
-  <ArrowRight size={20} color="#fff" />
-</TouchableOpacity>
+            style={[styles.signUpButton, { backgroundColor: theme.brand }]}
+            onPress={handleSignUp}
+          >
+            <Text style={styles.signUpButtonText}>Sign Up / पंजीकरण करें</Text>
+            <ArrowRight size={20} color="#fff" />
+          </TouchableOpacity>
         </ScrollView>
       </View>
     </SafeAreaView>
@@ -135,28 +116,19 @@ const styles = StyleSheet.create({
   header: { flexDirection: 'row', alignItems: 'center', paddingVertical: 15 },
   headerTitle: { fontSize: 18, fontWeight: '700', marginLeft: 20 },
   scrollContent: { paddingBottom: 40 },
-  progressContainer: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 20, marginBottom: 5 },
-  stepText: { fontSize: 14, fontWeight: '600' },
-  stepCount: { fontSize: 14 },
-  progressBarBg: { height: 6, borderRadius: 3, marginBottom: 25 },
-  progressBarFill: { height: '100%', width: '33%', borderRadius: 3 },
+  titleSection: { marginTop: 10, marginBottom: 25 },
   mainTitle: { fontSize: 28, fontWeight: '800' },
-  mainTitleHindi: { fontSize: 28, fontWeight: '800', marginBottom: 10 },
-  subTitle: { fontSize: 15 },
-  subTitleHindi: { fontSize: 15, marginBottom: 30 },
+  mainTitleHindi: { fontSize: 28, fontWeight: '800' },
+  subTitle: { fontSize: 15, marginTop: 5 },
   formContainer: { marginBottom: 15 },
-  inputGroup: { marginBottom: 20 },
+  inputGroup: { marginBottom: 18 },
   inputLabel: { fontSize: 14, fontWeight: '600', marginBottom: 8 },
   inputWrapper: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderRadius: 12, backgroundColor: '#fff', height: 55, paddingHorizontal: 15 },
   inputIcon: { marginRight: 10 },
-  countryCodeContainer: { flexDirection: 'row', alignItems: 'center', marginRight: 10 },
-  countryCode: { fontSize: 16, fontWeight: '600' },
-  vDivider: { width: 1, height: 20, marginLeft: 10 },
   input: { flex: 1, height: '100%', fontSize: 16 },
-  termsContainer: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: 30 },
-  checkbox: { width: 20, height: 20, borderRadius: 6, borderWidth: 2, backgroundColor: '#fff', marginTop: 3, justifyContent: 'center', alignItems: 'center' },
-  termsTextWrapper: { flex: 1, marginLeft: 12 },
-  termsText: { fontSize: 13, lineHeight: 18 },
-  nextButton: { flexDirection: 'row', borderRadius: 15, height: 60, justifyContent: 'center', alignItems: 'center', elevation: 3 },
-  nextButtonText: { fontSize: 18, color: '#fff', fontWeight: '700', marginRight: 10 },
+  termsContainer: { flexDirection: 'row', alignItems: 'center', marginBottom: 30 },
+  checkbox: { width: 20, height: 20, borderRadius: 6, borderWidth: 2, backgroundColor: '#fff', marginRight: 12, justifyContent: 'center', alignItems: 'center' },
+  termsText: { fontSize: 13 },
+  signUpButton: { flexDirection: 'row', borderRadius: 15, height: 60, justifyContent: 'center', alignItems: 'center', elevation: 3 },
+  signUpButtonText: { fontSize: 18, color: '#fff', fontWeight: '700', marginRight: 10 },
 });
