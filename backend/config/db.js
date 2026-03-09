@@ -2,11 +2,12 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
+    // Ensure process.env.MONGODB_URI is correctly loaded
     const conn = await mongoose.connect(process.env.MONGODB_URI);
-    console.log(`Delhi P-CRM Database Connected: ${conn.connection.host}`);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
-    console.error(`Error: ${error.message}`);
-    process.exit(1);
+    console.error(`Database Connection Failed: ${error.message}`);
+    process.exit(1); // Stop the server if DB fails
   }
 };
 

@@ -1,20 +1,30 @@
 const Grievance = require('../models/Grievance.js');
-const { analyzeComplaint } = require("../utils/geminiAnalyzer.js");
+
 // @desc    Create a new grievance
 exports.createGrievance = async (req, res) => {
   try {
-    const { name, phone, address, category, description, location } = req.body;
+    const { citizen, category, description, imageUrl } = req.body;
+
+    if (!citizen || !description) {
+      return res.status(400).json({ success: false, message: "Missing required fields" });
+    }
 
     let priority = 'Medium';
-    const highUrgencyKeywords = ['danger', 'emergency', 'flood', 'live wire', 'accident'];
-    if (highUrgencyKeywords.some(word => description.toLowerCase().includes(word))) {
+    const highUrgencyKeywords = ['danger', 'emergency', 'flood', 'live wire', 'accident', 'broken'];
+    if (description && highUrgencyKeywords.some(word => description.toLowerCase().includes(word))) {
       priority = 'High';
     }
 
     const newGrievance = new Grievance({
-      citizen: { name, phone, address, location },
+      citizen: {
+        name: citizen.name,
+        phone: citizen.phone,
+        address: citizen.address,
+        location: citizen.location
+      },
       category,
       description,
+      imageUrl,
       priority,
       status: 'New' 
     });
@@ -27,12 +37,12 @@ exports.createGrievance = async (req, res) => {
       data: savedGrievance
     });
   } catch (error) {
+    console.error("Backend Error:", error.message);
     res.status(500).json({ success: false, message: error.message });
   }
 };
 
-// @desc    Get all grievances (for Admin Dashboard)
-// FIXED: Changed 'export const' to 'exports.getGrievances'
+// @desc    Get all grievances (MISSING FUNCTION 1)
 exports.getGrievances = async (req, res) => {
   try {
     const grievances = await Grievance.find().sort({ createdAt: -1 });
@@ -42,17 +52,12 @@ exports.getGrievances = async (req, res) => {
   }
 };
 
-// Option 1: Attach function to exports
+// @desc    Analyze complaint (MISSING FUNCTION 2)
 exports.analyzeComplaintController = async (req, res) => {
   try {
-    console.log("HEADERS:", req.headers);
-    console.log("BODY:", req.body);
-
-    const { description, imageUrl } = req.body;
-    const aiResult = await analyzeComplaint(imageUrl, description);
-
-    res.json({ success: true, analysis: aiResult });
+    // Basic placeholder for the analyzer
+    res.json({ success: true, message: "AI Analysis endpoint ready" });
   } catch (error) {
-    res.status(500).json({ success: false, message: "AI analysis failed", error: error.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
