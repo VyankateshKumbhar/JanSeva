@@ -94,14 +94,18 @@ export default function JanSevaDashboard() {
           showsHorizontalScrollIndicator={false}
           style={styles.activityScroll}
         >
-          <ActivityCard
-            tag="PENDING"
-            time="2h ago"
-            title="Pothole - Sector 4"
-            desc="Road maintenance request"
-            progress={0.4}
-            color={theme.warning}
-          />
+          <TouchableOpacity
+  onPress={() => router.push("/Department/departmet_dashboard")}
+>
+  <ActivityCard
+    tag="PENDING"
+    time="2h ago"
+    title="Pothole - Sector 4"
+    desc="Road maintenance request"
+    progress={0.4}
+    color={theme.warning}
+  />
+</TouchableOpacity>
           <ActivityCard
             tag="UNDER REVIEW"
             title="Street Light"

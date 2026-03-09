@@ -73,10 +73,13 @@ export default function LoginScreen() {
           </View>
 
           {/* Submit Button */}
-          <TouchableOpacity style={styles.primaryBtn}>
-            <Text style={styles.primaryBtnText}>Send OTP | ओटीपी भेजें</Text>
-            <Ionicons name="arrow-forward" size={20} color="#fff" />
-          </TouchableOpacity>
+          <TouchableOpacity
+  style={styles.primaryBtn}
+  onPress={() => router.push("/Department/departmet_dashboard")}
+>
+  <Text style={styles.primaryBtnText}>Send OTP | ओटीपी भेजें</Text>
+  <Ionicons name="arrow-forward" size={20} color="#fff" />
+</TouchableOpacity>
 
           {/* Footer */}
           <View style={styles.dividerContainer}>
