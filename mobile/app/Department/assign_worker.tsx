@@ -7,12 +7,18 @@ import {
   Switch,
   TextInput,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  SafeAreaView,
+  Alert
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import ScreenHeader from "../../components/screen_header";
+import { useRouter } from "expo-router";
+
 export default function AssignWorkerScreen() {
-  const [selectedWorker, setSelectedWorker] = useState<string | null>("Rahul");
+  const [selectedWorkerId, setSelectedWorkerId] = useState<string | null>("1");
+  const [remarks, setRemarks] = useState("");
+  const router = useRouter();
 
   const workers = [
     {
@@ -28,225 +34,289 @@ export default function AssignWorkerScreen() {
       dept: "Electrical | बिजली",
       jobs: 1,
       image: "https://i.pravatar.cc/100?img=4"
+    },
+    {
+      id: "3",
+      name: "Suresh",
+      dept: "Water | जल विभाग",
+      jobs: 0,
+      image: "https://i.pravatar.cc/100?img=12"
     }
   ];
 
+  const handleAssign = () => {
+    const worker = workers.find(w => w.id === selectedWorkerId);
+    Alert.alert(
+      "Assignment Confirmed",
+      `Complaint assigned to ${worker?.name}. They will be notified immediately.`,
+      [{ text: "OK", onPress: () => router.push("/Department/department_dashboard") }]
+    );
+  };
+
   return (
-    <ScrollView style={styles.container}>
+    <SafeAreaView style={styles.safeArea}>
+      <ScreenHeader title="ASSIGN WORKER" />
       
-      {/* Header */}
-      <ScreenHeader title="Assign Worker" />
+      <ScrollView 
+        style={styles.container} 
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Complaint Summary */}
+        <Text style={styles.sectionTitle}>
+          COMPLAINT SUMMARY | शिकायत का सारांश
+        </Text>
 
-      {/* Complaint Summary */}
-      <Text style={styles.sectionTitle}>
-        COMPLAINT SUMMARY | शिकायत का सारांश
-      </Text>
-
-      <View style={styles.summaryCard}>
-        <View style={{ flex: 1 }}>
-          <Text style={styles.complaintTitle}>Street Light Not Working</Text>
-          <Text style={styles.complaintMeta}>
-            ID: #JS-9921 • Sector 14, Main Road
-          </Text>
-          <Text style={styles.reported}>Reported by: Sunil Kumar</Text>
-        </View>
-
-        <Image
-          source={{
-            uri: "https://images.unsplash.com/photo-1519608487953-e999c86e7455"
-          }}
-          style={styles.summaryImage}
-        />
-      </View>
-
-      {/* Workers */}
-      <Text style={styles.sectionTitle}>
-        AVAILABLE WORKERS | उपलब्ध कर्मचारी
-      </Text>
-
-      {workers.map((worker) => (
-        <View key={worker.id} style={styles.workerCard}>
-          <Image source={{ uri: worker.image }} style={styles.workerImage} />
-
+        <View style={styles.summaryCard}>
           <View style={{ flex: 1 }}>
-            <Text style={styles.workerName}>
-              {worker.name} ({worker.dept})
+            <Text style={styles.complaintTitle}>Water Leakage Issue</Text>
+            <Text style={styles.complaintMeta}>
+              ID: #JS-9921 • Ward 5, Shanti Nagar
             </Text>
-            <Text style={styles.workerJobs}>
-              Active Jobs: {worker.jobs}
-            </Text>
+            <Text style={styles.reported}>Priority: High / उच्च प्राथमिकता</Text>
           </View>
 
-          <Switch
-            value={selectedWorker === worker.name}
-            onValueChange={() => setSelectedWorker(worker.name)}
-            trackColor={{ true: "#E85C2E", false: "#ccc" }}
+          <Image
+            source={{
+              uri: "https://images.unsplash.com/photo-1504215680853-026ed2a45def"
+            }}
+            style={styles.summaryImage}
           />
         </View>
-      ))}
 
-      {/* Deadline */}
-      <Text style={styles.sectionTitle}>
-        SET DEADLINE | समय सीमा निर्धारित करें
-      </Text>
-
-      <View style={styles.inputBox}>
-        <Text>10/27/2023, 06:00 PM</Text>
-        <Ionicons name="calendar-outline" size={20} color="#777" />
-      </View>
-
-      {/* Remarks */}
-      <Text style={styles.sectionTitle}>
-        ADD REMARKS | टिप्पणी जोड़ें
-      </Text>
-
-      <TextInput
-        placeholder="Enter instructions for the worker..."
-        style={styles.textArea}
-        multiline
-      />
-
-      {/* Button */}
-      <TouchableOpacity style={styles.button}>
-        <Ionicons name="clipboard-outline" size={20} color="#fff" />
-        <Text style={styles.buttonText}>
-          ASSIGN WORKER | कर्मचारी नियुक्त करें
+        {/* Workers Selection */}
+        <Text style={styles.sectionTitle}>
+          AVAILABLE WORKERS | उपलब्ध कर्मचारी
         </Text>
-      </TouchableOpacity>
 
-      <Text style={styles.footer}>
-        JAN SEVA ADMINISTRATION PORTAL
-      </Text>
-    </ScrollView>
+        {workers.map((worker) => (
+          <TouchableOpacity 
+            key={worker.id} 
+            style={[
+                styles.workerCard, 
+                selectedWorkerId === worker.id && styles.activeWorkerCard
+            ]}
+            onPress={() => setSelectedWorkerId(worker.id)}
+          >
+            <Image source={{ uri: worker.image }} style={styles.workerImage} />
+
+            <View style={{ flex: 1 }}>
+              <Text style={styles.workerName}>
+                {worker.name}
+              </Text>
+              <Text style={styles.workerDept}>
+                {worker.dept}
+              </Text>
+              <Text style={styles.workerJobs}>
+                Active Jobs: {worker.jobs}
+              </Text>
+            </View>
+
+            <View style={[
+                styles.radioCircle, 
+                selectedWorkerId === worker.id && styles.radioCircleActive
+            ]}>
+                {selectedWorkerId === worker.id && <View style={styles.radioInner} />}
+            </View>
+          </TouchableOpacity>
+        ))}
+
+        {/* Deadline */}
+        <Text style={styles.sectionTitle}>
+          SET DEADLINE | समय सीमा निर्धारित करें
+        </Text>
+
+        <TouchableOpacity style={styles.inputBox}>
+          <Text style={styles.inputText}>Expected Resolution: 24 Hours</Text>
+          <Ionicons name="calendar-outline" size={20} color="#E85C2E" />
+        </TouchableOpacity>
+
+        {/* Remarks */}
+        <Text style={styles.sectionTitle}>
+          ADD REMARKS | टिप्पणी जोड़ें
+        </Text>
+
+        <TextInput
+          placeholder="Enter specific instructions for the worker..."
+          style={styles.textArea}
+          multiline
+          numberOfLines={4}
+          value={remarks}
+          onChangeText={setRemarks}
+          placeholderTextColor="#999"
+        />
+
+        {/* Assign Button */}
+        <TouchableOpacity style={styles.button} onPress={handleAssign}>
+          <Ionicons name="person-add-outline" size={22} color="#fff" />
+          <Text style={styles.buttonText}>
+            CONFIRM ASSIGNMENT | नियुक्त करें
+          </Text>
+        </TouchableOpacity>
+
+        <Text style={styles.footer}>
+          JAN SEVA ADMINISTRATION PORTAL • OFFICIAL USE ONLY
+        </Text>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
     backgroundColor: "#F6F6F6",
-    padding: 20
   },
-
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 15
+  container: {
+    flex: 1,
+    paddingHorizontal: 20
   },
-
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: "600",
-    marginLeft: 10
+  scrollContent: {
+    paddingBottom: 40,
   },
-
   sectionTitle: {
-    marginTop: 20,
-    marginBottom: 10,
-    fontWeight: "600",
-    color: "#333"
+    marginTop: 25,
+    marginBottom: 12,
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#64748B",
+    letterSpacing: 0.5
   },
-
   summaryCard: {
     backgroundColor: "#fff",
-    borderRadius: 15,
-    padding: 15,
+    borderRadius: 20,
+    padding: 16,
     flexDirection: "row",
     alignItems: "center",
+    elevation: 3,
     shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
-    shadowRadius: 5,
-    elevation: 2
+    shadowRadius: 10,
   },
-
   complaintTitle: {
     fontSize: 16,
-    fontWeight: "600"
+    fontWeight: "800",
+    color: "#1E293B"
   },
-
   complaintMeta: {
-    color: "#777",
-    marginTop: 4
+    color: "#64748B",
+    marginTop: 4,
+    fontSize: 13
   },
-
   reported: {
-    marginTop: 6,
+    marginTop: 8,
     color: "#E85C2E",
-    fontWeight: "500"
+    fontWeight: "700",
+    fontSize: 12
   },
-
   summaryImage: {
     width: 70,
     height: 70,
-    borderRadius: 10
+    borderRadius: 12
   },
-
   workerCard: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#fff",
-    borderRadius: 15,
-    padding: 15,
-    marginBottom: 10
+    borderRadius: 18,
+    padding: 14,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: "transparent"
   },
-
+  activeWorkerCard: {
+    borderColor: "#E85C2E",
+    backgroundColor: "#FFF7ED"
+  },
   workerImage: {
-    width: 45,
-    height: 45,
+    width: 50,
+    height: 50,
     borderRadius: 25,
-    marginRight: 10
+    marginRight: 15
   },
-
   workerName: {
-    fontWeight: "600"
+    fontWeight: "800",
+    fontSize: 15,
+    color: "#1E293B"
   },
-
+  workerDept: {
+    fontSize: 12,
+    color: "#64748B",
+    marginTop: 2
+  },
   workerJobs: {
-    color: "#777",
-    fontSize: 12
+    color: "#E85C2E",
+    fontSize: 11,
+    fontWeight: "700",
+    marginTop: 4
   },
-
+  radioCircle: {
+    height: 22,
+    width: 22,
+    borderRadius: 11,
+    borderWidth: 2,
+    borderColor: "#CBD5E1",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  radioCircleActive: {
+    borderColor: "#E85C2E",
+  },
+  radioInner: {
+    height: 10,
+    width: 10,
+    borderRadius: 5,
+    backgroundColor: "#E85C2E",
+  },
   inputBox: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 10,
-    padding: 15,
-    backgroundColor: "#fff"
+    borderRadius: 15,
+    padding: 16,
+    backgroundColor: "#fff",
+    elevation: 2
   },
-
+  inputText: {
+    color: "#1E293B",
+    fontWeight: "600"
+  },
   textArea: {
     backgroundColor: "#fff",
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 10,
-    padding: 15,
-    height: 90,
-    textAlignVertical: "top"
+    borderRadius: 15,
+    padding: 16,
+    height: 100,
+    textAlignVertical: "top",
+    fontSize: 15,
+    color: "#1E293B",
+    elevation: 2
   },
-
   button: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#E85C2E",
-    padding: 16,
-    borderRadius: 30,
-    marginTop: 25
+    padding: 18,
+    borderRadius: 18,
+    marginTop: 30,
+    elevation: 4,
+    shadowColor: "#E85C2E",
+    shadowOpacity: 0.3,
+    shadowRadius: 10
   },
-
   buttonText: {
     color: "#fff",
-    fontWeight: "600",
-    marginLeft: 8
+    fontWeight: "800",
+    fontSize: 16,
+    marginLeft: 10
   },
-
   footer: {
     textAlign: "center",
-    marginTop: 20,
-    color: "#999",
-    fontSize: 12
+    marginTop: 25,
+    color: "#94A3B8",
+    fontSize: 10,
+    fontWeight: "700",
+    letterSpacing: 1
   }
 });

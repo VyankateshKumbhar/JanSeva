@@ -15,8 +15,8 @@ export default function RootLayout() {
     return (
       lowerPath.includes('login') || 
       lowerPath.includes('create-account') || 
-      lowerPath.includes('verification') || 
-      lowerPath.includes('success')
+      lowerPath.includes('department') || // HIDE for Admin
+      lowerPath.includes('worker_portal') // HIDE for Workers
     );
   };
 
