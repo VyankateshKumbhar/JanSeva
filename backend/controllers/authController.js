@@ -7,38 +7,62 @@ const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
 };
 
-exports.registerUser= async (req, res) => {
+exports.registerUser = async (req, res) => {
   try {
     const { name, email, password, role, ward, phone } = req.body;
-    
-    const userExists = await User.findOne({ email });
-    if (userExists) return res.status(400).json({ message: 'User already exists' });
+    const userExists = await User.findOne({ $or: [{ email }, { phone }] });
+    if (userExists) return res.status(400).json({ success: false, message: 'User already exists' });
 
-    const user = await User.create({ name, email, password: bcrypt.hashSync(password, 10), role, ward, phone });
+    const user = await User.create({ name, email, password, role, ward, phone });
 
     res.status(201).json({
+      success: true,
       _id: user._id,
       name: user.name,
       role: user.role,
       token: generateToken(user._id),
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
-exports.loginUser   = async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email });
+exports.loginUser = async (req, res) => {
+  try {
+    const { identifier, password } = req.body; 
 
-  if (user && (await bcrypt.compare(password, user.password))) {
-    res.json({
-      _id: user._id,
-      name: user.name,
-      role: user.role,
-      token: generateToken(user._id),
+    // Find user by Email OR Phone
+    const user = await User.findOne({
+      $or: [{ email: identifier }, { phone: identifier }]
     });
-  } else {
-    res.status(401).json({ message: 'Invalid email or password' });
+
+    if (user && (await bcrypt.compare(password, user.password))) {
+      
+      // Determine where to send the user based on role (Case Insensitive)
+      let redirectedDashboard = 'Citizen';
+      const userRole = user.role ? user.role.toLowerCase() : 'citizen';
+      
+      if (userRole === 'admin') {
+        redirectedDashboard = 'Admin';
+      } else if (userRole === 'worker') {
+        redirectedDashboard = 'Worker';
+      }
+
+      res.json({
+        success: true,
+        user: {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          redirectedDashboard,
+        },
+        token: generateToken(user._id),
+      });
+    } else {
+      res.status(401).json({ success: false, message: 'Invalid credentials' });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
 };
