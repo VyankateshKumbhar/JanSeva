@@ -23,24 +23,24 @@ export default function AssignWorkerScreen() {
   const workers = [
     {
       id: "1",
-      name: "Rahul",
-      dept: "Sanitation | स्वच्छता",
+      name: "Abhishek Sharma",
+      dept: "Sanitation",
       jobs: 2,
       image: "https://i.pravatar.cc/100?img=3"
     },
     {
       id: "2",
-      name: "Amit",
-      dept: "Electrical | बिजली",
+      name: "Amit kilhor",
+      dept: "Electrical",
       jobs: 1,
       image: "https://i.pravatar.cc/100?img=4"
     },
     {
       id: "3",
-      name: "Suresh",
-      dept: "Water | जल विभाग",
+      name: "Suresh Bhatt",
+      dept: "Water",
       jobs: 0,
-      image: "https://i.pravatar.cc/100?img=12"
+      image: "https://i.pravatar.cc/100?img=11"
     }
   ];
 
@@ -64,7 +64,7 @@ export default function AssignWorkerScreen() {
       >
         {/* Complaint Summary */}
         <Text style={styles.sectionTitle}>
-          COMPLAINT SUMMARY | शिकायत का सारांश
+          COMPLAINT SUMMARY
         </Text>
 
         <View style={styles.summaryCard}>
@@ -73,12 +73,12 @@ export default function AssignWorkerScreen() {
             <Text style={styles.complaintMeta}>
               ID: #JS-9921 • Ward 5, Shanti Nagar
             </Text>
-            <Text style={styles.reported}>Priority: High / उच्च प्राथमिकता</Text>
+            <Text style={styles.reported}>Priority: High</Text>
           </View>
 
           <Image
             source={{
-              uri: "https://images.unsplash.com/photo-1504215680853-026ed2a45def"
+              uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzb70TO_53PRo9hQ_uh9i9wPrBO67U-k_99Q&s"
             }}
             style={styles.summaryImage}
           />
@@ -86,7 +86,7 @@ export default function AssignWorkerScreen() {
 
         {/* Workers Selection */}
         <Text style={styles.sectionTitle}>
-          AVAILABLE WORKERS | उपलब्ध कर्मचारी
+          AVAILABLE WORKERS
         </Text>
 
         {workers.map((worker) => (
@@ -123,7 +123,7 @@ export default function AssignWorkerScreen() {
 
         {/* Deadline */}
         <Text style={styles.sectionTitle}>
-          SET DEADLINE | समय सीमा निर्धारित करें
+          SET DEADLINE
         </Text>
 
         <TouchableOpacity style={styles.inputBox}>
@@ -133,7 +133,7 @@ export default function AssignWorkerScreen() {
 
         {/* Remarks */}
         <Text style={styles.sectionTitle}>
-          ADD REMARKS | टिप्पणी जोड़ें
+          ADD REMARKS
         </Text>
 
         <TextInput
@@ -150,7 +150,7 @@ export default function AssignWorkerScreen() {
         <TouchableOpacity style={styles.button} onPress={handleAssign}>
           <Ionicons name="person-add-outline" size={22} color="#fff" />
           <Text style={styles.buttonText}>
-            CONFIRM ASSIGNMENT | नियुक्त करें
+            CONFIRM ASSIGNMENT
           </Text>
         </TouchableOpacity>
 

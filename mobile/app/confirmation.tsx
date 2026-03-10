@@ -37,7 +37,7 @@ export default function ConfirmationScreen() {
         </View>
 
         {/* Success Message */}
-        <Text style={styles.thanksText}>Thank You! / धन्यवाद!</Text>
+        <Text style={styles.thanksText}>Thank You!</Text>
         <Text style={styles.subText}>
           Your grievance has been successfully submitted.
         </Text>
@@ -71,7 +71,7 @@ export default function ConfirmationScreen() {
         {/* Action Buttons */}
         <TouchableOpacity style={styles.statusButton}>
           <Text style={styles.statusButtonText}>
-            View Status / स्थिति देखें
+            View Status
           </Text>
         </TouchableOpacity>
 

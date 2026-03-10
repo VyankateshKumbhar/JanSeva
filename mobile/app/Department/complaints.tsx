@@ -52,7 +52,7 @@ export default function ComplaintsScreen() {
       <ScrollView style={{ paddingHorizontal: 16 }}>
         <ComplaintCard
           id="C101"
-          title="Garbage / कचरा"
+          title="Garbage"
           location="Ward 5, Krishna Nagar"
           time="Reported: 2h ago"
           status="PENDING"
@@ -62,7 +62,7 @@ export default function ComplaintsScreen() {
 
         <ComplaintCard
           id="C102"
-          title="Road Damage / सड़क क्षति"
+          title="Road Damage"
           location="Ward 3, Subhash Road"
           time="Engineer: Rajesh Kumar"
           status="ASSIGNED"
@@ -72,7 +72,7 @@ export default function ComplaintsScreen() {
 
         <ComplaintCard
           id="C105"
-          title="Street Light / स्ट्रीट लाइट"
+          title="Street Light"
           location="Ward 12, Civil Lines"
           time="Repair ongoing"
           status="IN PROGRESS"
@@ -82,7 +82,7 @@ export default function ComplaintsScreen() {
 
         <ComplaintCard
           id="C098"
-          title="Water Leak / पानी का रिसाव"
+          title="Water Leak"
           location="Ward 8"
           time="Reason: Incorrect location provided"
           status="REJECTED"
@@ -90,11 +90,6 @@ export default function ComplaintsScreen() {
           onPress={() => router.push("/Department/complaint_details")}
         />
       </ScrollView>
-
-      {/* FLOAT BUTTON */}
-      <TouchableOpacity style={styles.fab}>
-        <Ionicons name="add" size={30} color="white" />
-      </TouchableOpacity>
 
       {/* BOTTOM NAV */}
       <View style={styles.bottomNav}>
