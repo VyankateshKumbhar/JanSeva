@@ -60,7 +60,6 @@ export default function JanSevaDashboard() {
         >
           <View>
             <Text style={styles.reportTitle}>Report New Complaint</Text>
-            <Text style={styles.reportSubTitle}>शिकायत दर्ज करें</Text>
           </View>
           <View style={styles.megaphoneCircle}>
             <Megaphone color="white" size={32} />
@@ -81,9 +80,6 @@ export default function JanSevaDashboard() {
         </View>
 
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>
-            Recent Activity / हाल की गतिविधि
-          </Text>
           <View style={styles.badge}>
             <Text style={styles.badgeText}>2 ACTIVE</Text>
           </View>
@@ -95,7 +91,7 @@ export default function JanSevaDashboard() {
           style={styles.activityScroll}
         >
           <TouchableOpacity
-  onPress={() => router.push("/Department/departmet_dashboard")}
+  onPress={() => router.push("/Department/department_dashboard")}
 >
   <ActivityCard
     tag="PENDING"
@@ -115,7 +111,6 @@ export default function JanSevaDashboard() {
           />
         </ScrollView>
 
-        <Text style={styles.sectionTitle}>Quick Links / त्वरित लिंक</Text>
         <QuickLinkItem
           icon={<Info color={theme.brand} size={20} />}
           title="Government Schemes"

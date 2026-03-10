@@ -56,47 +56,31 @@ export default function ComplaintDetails() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-
+      
         {/* HEADER */}
         <ScreenHeader title="COMPLAINT DETAILS" />
-
-        {/* LANGUAGE TABS */}
-        <View style={styles.langTabs}>
-          <TouchableOpacity onPress={() => setLang('en')}>
-            <Text style={[styles.langText, lang === 'en' && styles.activeLang]}>English</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setLang('hi')}>
-            <Text style={[styles.langText, lang === 'hi' && styles.activeLang]}>हिंदी</Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* STATUS BADGE */}
-        <View style={styles.statusBadge}>
-          <Text style={styles.statusText}>● {t.status} / {translations.hi.status}</Text>
-        </View>
-
+      <ScrollView
+  showsVerticalScrollIndicator={false}
+  contentContainerStyle={{ paddingBottom: 120 }}
+>
         {/* CITIZEN INFO */}
         <Text style={styles.sectionTitle}>
-          {t.citizenTitle} / {translations.hi.citizenTitle}
+          {t.citizenTitle}
         </Text>
 
         <View style={styles.card}>
           <View style={styles.rowBetween}>
             <View>
-              <Text style={styles.label}>{t.nameLabel} / नाम</Text>
               <Text style={styles.value}>Rajesh Kumar</Text>
             </View>
 
             <View>
-              <Text style={styles.label}>{t.phoneLabel} / फोन</Text>
               <Text style={styles.value}>+91 98765 43210</Text>
             </View>
           </View>
 
           <View style={styles.divider} />
 
-          <Text style={styles.label}>{t.locLabel} / स्थान</Text>
           <Text style={styles.value}>
             Ward 5, Shanti Nagar, Metro Pillar 42
           </Text>
@@ -104,33 +88,28 @@ export default function ComplaintDetails() {
 
         {/* COMPLAINT INFO */}
         <Text style={styles.sectionTitle}>
-          {t.complaintTitle} / {translations.hi.complaintTitle}
+          {t.complaintTitle}
         </Text>
 
         <View style={styles.card}>
-          <Text style={styles.label}>{t.catLabel} / श्रेणी</Text>
 
           <View style={styles.categoryBadge}>
             <MaterialIcons name="water-drop" size={16} color="#e05a2a" />
             <Text style={styles.categoryText}>
-              {t.category} / {translations.hi.category}
+              {t.category}
             </Text>
           </View>
-
-          <Text style={[styles.label, { marginTop: 15 }]}>
-            {t.descLabel} / विवरण
-          </Text>
 
           <Text style={styles.desc}>{t.description}</Text>
 
           <Text style={[styles.label, { marginTop: 15 }]}>
-            {t.photoLabel} / {translations.hi.photoLabel}
+            {t.photoLabel}
           </Text>
 
           <View style={styles.imageBox}>
             <Image
               source={{
-                uri: "https://images.unsplash.com/photo-1504215680853-026ed2a45def",
+                uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzb70TO_53PRo9hQ_uh9i9wPrBO67U-k_99Q&s",
               }}
               style={styles.image}
             />
@@ -152,30 +131,6 @@ export default function ComplaintDetails() {
           </Text>
         </TouchableOpacity>
 
-        {/* APPROVE REJECT */}
-        <View style={styles.actionRow}>
-          <TouchableOpacity style={styles.approveBtn}>
-            <Ionicons name="checkmark-circle" size={20} color="#1f7a3f" />
-            <Text style={styles.approveText}>{t.approve}</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.rejectBtn}>
-            <Ionicons name="close-circle" size={20} color="#c23b3b" />
-            <Text style={styles.rejectText}>{t.reject}</Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* TRACK WORKER */}
-        <TouchableOpacity style={styles.trackCard}>
-          <MaterialIcons name="map" size={24} color="#e05a2a" />
-          <View style={{ flex: 1, marginLeft: 10 }}>
-            <Text style={styles.trackTitle}>Track Worker Progress</Text>
-            <Text style={styles.trackSub}>
-              Available after assignment
-            </Text>
-          </View>
-          <Ionicons name="chevron-forward" size={22} color="#999" />
-        </TouchableOpacity>
 
       </ScrollView>
 
@@ -255,6 +210,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     marginHorizontal: 20,
     marginBottom: 10,
+    marginTop:10,
   },
   card: {
     backgroundColor: "#fff",

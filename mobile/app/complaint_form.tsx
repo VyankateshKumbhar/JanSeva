@@ -31,11 +31,11 @@ export default function ReportComplaint() {
   const [loadingLocation, setLoadingLocation] = useState(false);
 
  const departments = [
-  { label: "Sanitation / स्वच्छता", value: "Sanitation" },
-  { label: "Electricity / बिजली", value: "Electricity" },
-  { label: "Water Supply / जल आपूर्ति", value: "Water" },
-  { label: "Roads & Potholes / सड़कें", value: "Road" }, // Must be 'Road' to match model
-  { label: "Education / शिक्षा", value: "Education" }, 
+  { label: "Sanitation", value: "Sanitation" },
+  { label: "Electricity", value: "Electricity" },
+  { label: "Water Supply", value: "Water" },
+  { label: "Roads & Potholes", value: "Road" }, // Must be 'Road' to match model
+  { label: "Education", value: "Education" }, 
 ];
 
   // 2. IMAGE PICKER
@@ -122,7 +122,7 @@ export default function ReportComplaint() {
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 120 }}>
         
         <View style={styles.section}>
-          <Text style={styles.label}>Add Photo / फोटो जोड़ें</Text>
+          <Text style={styles.label}>Add Photo</Text>
           <TouchableOpacity style={styles.photoBox} onPress={pickImage}>
             {image ? (
               <Image source={{ uri: image }} style={styles.fullImage} />
@@ -136,7 +136,7 @@ export default function ReportComplaint() {
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.label}>Select Department / विभाग चुनें</Text>
+          <Text style={styles.label}>Select Department</Text>
           <View style={styles.dropdownWrapper}>
             <Picker
               selectedValue={category}
@@ -158,7 +158,7 @@ export default function ReportComplaint() {
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.label}>Description / विवरण</Text>
+          <Text style={styles.label}>Description</Text>
           <TextInput
             multiline
             placeholder="Describe the issue..."
@@ -169,7 +169,7 @@ export default function ReportComplaint() {
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.label}>Location / स्थान</Text>
+          <Text style={styles.label}>Location</Text>
           <TouchableOpacity 
             style={[styles.locationBtn, location && { backgroundColor: '#D1FAE5' }]} 
             onPress={getCurrentLocation}
